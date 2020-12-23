@@ -11,13 +11,11 @@ $(document).ready(function(){
         let tooltip = bar.children[0];
         tooltip.innerText = percentage + '%';
         bar.style.width = percentage + '%';
-        console.log(percentage);
     });
 
     //counter 
 
     const counters = document.querySelectorAll('.counter');
-    console.log(counters);
 
     function runCounter () {
         counters.forEach(counter => {
@@ -41,12 +39,12 @@ $(document).ready(function(){
         });
     }
 
-    runCounter();
+    // runCounter();
     
     let counterSection = document.querySelector('.counter__wrapper');
 
     let options = {
-        rootMargin : '0px 0px -100px 0px'
+        rootMargin : '0px 0px -200px 0px'
     }
     let done = 0;
 
@@ -59,9 +57,70 @@ $(document).ready(function(){
             runCounter();
         }
 
-    }, options);
+    }, options)
 
     sectionObserver.observe(counterSection);
+
+    // img filter
+
+    var $wrapper = $('.portfolio__wrapper');
+
+    // initialize isotope
+
+    $wrapper.isotope({
+        filter : '*',
+        layoutMode : 'masonry',
+        animationOptions : {
+            duration: 750,
+            easing: 'linear'
+        }
+    });
+
+    let links = document.querySelectorAll('.tabs a');
+
+    links.forEach(link => {
+
+        let selector = link.dataset.filter;
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            $wrapper.isotope({
+                filter : selector,
+                layoutMode : 'masonry',
+                animationOptions : {
+                    duration: 750,
+                    easing: 'linear'
+                }
+            });
+
+            links.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            e.target.classList.add('active');
+
+
+        });
+    });
+
+    // magnific popup
+
+    $('.magnific').magnificPopup({
+        type: 'image',
+        gallery: {
+            enable : true
+        },
+        zoom : {
+            enable : true
+        }
+    });
+
+    // slider
+    
+    $('.slider').slick({
+        arrows: false,
+        autoplay: true
+    });
 
 
 });
